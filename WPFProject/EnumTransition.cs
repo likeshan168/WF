@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace WPFProject
 {
-    public enum EnumTransition
+    public enum DriveTransition
     {
         StartEngine,
         TurnOff,
         InGear,
         PutInReverse,
-        PutInNeutral
+        PutInPark
     }
 }

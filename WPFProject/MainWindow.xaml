@@ -9,7 +9,7 @@
     <Grid>
         <Button x:Name="cmdStartEngine" Content="Start Engine" HorizontalAlignment="Left" Margin="198,40,0,0" VerticalAlignment="Top" Width="89" Click="cmdStartEngine_Click"/>
         <Button x:Name="cmdDrive" Content="Drive" HorizontalAlignment="Left" Margin="198,92,0,0" VerticalAlignment="Top" Width="89" Click="cmdDrive_Click"/>
-        <Button x:Name="cmdNeutral" Content="Neutral" HorizontalAlignment="Left" Margin="198,141,0,0" VerticalAlignment="Top" Width="89" Click="cmdNeutral_Click"/>
+        <Button x:Name="cmdPark" Content="Park" HorizontalAlignment="Left" Margin="198,141,0,0" VerticalAlignment="Top" Width="89" Click="cmdPark_Click"/>
         <Button x:Name="cmdReverse" Content="Reverse" HorizontalAlignment="Left" Margin="198,187,0,0" VerticalAlignment="Top" Width="89" Click="cmdReverse_Click"/>
         <Button x:Name="cmdTurnOff" Content="Turn Off" HorizontalAlignment="Left" Margin="198,235,0,0" VerticalAlignment="Top" Width="89" Click="cmdTurnOff_Click"/>
     </Grid>
