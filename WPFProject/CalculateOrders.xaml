@@ -1,0 +1,19 @@
+﻿<Window x:Class="WPFProject.CalculateOrders"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFProject"
+        mc:Ignorable="d"
+        Title="CalculateOrders" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="43*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="cmdRuntime" Content="Get Orders" HorizontalAlignment="Left" Margin="108,90,0,0" VerticalAlignment="Top" Width="104" Grid.ColumnSpan="2" Click="cmdRuntime_Click"/>
+        <CheckBox x:Name="chkApprove" Content="Approve" HorizontalAlignment="Left" Margin="118,126,0,0" VerticalAlignment="Top" IsChecked="True" Grid.ColumnSpan="2"/>
+        <Button x:Name="cmdApprove" Content="Approve/DisApprove Order" HorizontalAlignment="Left" Margin="80,160,0,0" VerticalAlignment="Top" Width="174" Grid.ColumnSpan="2" Click="cmdApprove_Click"/>
+
+    </Grid>
+</Window>

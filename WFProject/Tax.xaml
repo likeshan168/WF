@@ -1,0 +1,412 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WFProject.Tax"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:d="clr-namespace:DataModel;assembly=DataModel"
+ xmlns:local="clr-namespace:WFProject"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="argInCalcCustomers" Type="InArgument(d:Customers)" />
+  </x:Members>
+  <local:Tax.argInCalcCustomers>
+    <InArgument x:TypeArguments="d:Customers">
+      <mca:CSharpValue x:TypeArguments="d:Customers">new Customers()</mca:CSharpValue>
+    </InArgument>
+  </local:Tax.argInCalcCustomers>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>WFProject.Tax_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>DataModel</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>EntityFramework</AssemblyReference>
+      <AssemblyReference>EntityFramework.SqlServer</AssemblyReference>
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.DataAnnotations</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>DataModel</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>WFProject</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <ForEach x:TypeArguments="d:Customer" DisplayName="ForEach&lt;Customer&gt;" sap2010:WorkflowViewState.IdRef="ForEach`1_3">
+    <ForEach.Values>
+      <InArgument x:TypeArguments="scg:IEnumerable(d:Customer)">
+        <mca:CSharpValue x:TypeArguments="scg:IEnumerable(d:Customer)">argInCalcCustomers</mca:CSharpValue>
+      </InArgument>
+    </ForEach.Values>
+    <ActivityAction x:TypeArguments="d:Customer">
+      <ActivityAction.Argument>
+        <DelegateInArgument x:TypeArguments="d:Customer" Name="cust" />
+      </ActivityAction.Argument>
+      <ForEach x:TypeArguments="d:Order" DisplayName="ForEach&lt;Order&gt;" sap2010:WorkflowViewState.IdRef="ForEach`1_2">
+        <ForEach.Values>
+          <InArgument x:TypeArguments="scg:IEnumerable(d:Order)">
+            <mca:CSharpValue x:TypeArguments="scg:IEnumerable(d:Order)">cust.CustomerOrders</mca:CSharpValue>
+          </InArgument>
+        </ForEach.Values>
+        <ActivityAction x:TypeArguments="d:Order">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="d:Order" Name="order" />
+          </ActivityAction.Argument>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
+            <ForEach x:TypeArguments="d:OrderLineItem" DisplayName="ForEach&lt;OrderLineItem&gt;" sap2010:WorkflowViewState.IdRef="ForEach`1_1">
+              <ForEach.Values>
+                <InArgument x:TypeArguments="scg:IEnumerable(d:OrderLineItem)">
+                  <mca:CSharpValue x:TypeArguments="scg:IEnumerable(d:OrderLineItem)">order.LineItems</mca:CSharpValue>
+                </InArgument>
+              </ForEach.Values>
+              <ActivityAction x:TypeArguments="d:OrderLineItem">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="d:OrderLineItem" Name="lineItem" />
+                </ActivityAction.Argument>
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Decimal">
+                      <mca:CSharpReference x:TypeArguments="x:Decimal">order.TotalPrice</mca:CSharpReference>
+                    </OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Decimal">
+                      <mca:CSharpValue x:TypeArguments="x:Decimal">order.TotalPrice+lineItem.Price.Value</mca:CSharpValue>
+                    </InArgument>
+                  </Assign.Value>
+                </Assign>
+              </ActivityAction>
+            </ForEach>
+            <Flowchart sap2010:Annotation.AnnotationText="Calculates State tax based on the name of the State passed in" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+              <Flowchart.StartNode>
+                <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID1" sap2010:Annotation.AnnotationText="Calculates tax based on the State" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
+                  <FlowSwitch.Expression>
+                    <mca:CSharpValue x:TypeArguments="x:String">order.ShippingState</mca:CSharpValue>
+                  </FlowSwitch.Expression>
+                  <FlowStep x:Key="Florida" x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                    <Assign sap2010:Annotation.AnnotationText="Florida is taxed at 7%." sap2010:WorkflowViewState.IdRef="Assign_3">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Decimal">
+                          <mca:CSharpReference x:TypeArguments="x:Decimal">order.Tax</mca:CSharpReference>
+                        </OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Decimal">
+                          <mca:CSharpValue x:TypeArguments="x:Decimal">order.TotalPrice*.07m</mca:CSharpValue>
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <FlowStep.Next>
+                      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                        <Assign sap2010:Annotation.AnnotationText="Calculates tax based on the State" sap2010:WorkflowViewState.IdRef="Assign_5">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Decimal">
+                              <mca:CSharpReference x:TypeArguments="x:Decimal">order.TotalPrice</mca:CSharpReference>
+                            </OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Decimal">
+                              <mca:CSharpValue x:TypeArguments="x:Decimal">order.Tax+order.TotalPrice</mca:CSharpValue>
+                            </InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <FlowStep.Next>
+                          <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+                            <If sap2010:Annotation.AnnotationText="Orders over $18.75 need approval" sap2010:WorkflowViewState.IdRef="If_1">
+                              <If.Condition>
+                                <InArgument x:TypeArguments="x:Boolean">
+                                  <mca:CSharpValue x:TypeArguments="x:Boolean">order.TotalPrice&gt;18.75m</mca:CSharpValue>
+                                </InArgument>
+                              </If.Condition>
+                              <If.Then>
+                                <Pick sap2010:WorkflowViewState.IdRef="Pick_1">
+                                  <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_1">
+                                    <PickBranch.Variables>
+                                      <Variable x:TypeArguments="x:Boolean" Default="False" Name="varApproved" />
+                                    </PickBranch.Variables>
+                                    <PickBranch.Trigger>
+                                      <local:WaitForResponse x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="WaitForResponse`1_1" ResponseName="ApproveOrder">
+                                        <local:WaitForResponse.Result>
+                                          <OutArgument x:TypeArguments="x:Boolean">
+                                            <mca:CSharpReference x:TypeArguments="x:Boolean">varApproved</mca:CSharpReference>
+                                          </OutArgument>
+                                        </local:WaitForResponse.Result>
+                                      </local:WaitForResponse>
+                                    </PickBranch.Trigger>
+                                    <If sap2010:WorkflowViewState.IdRef="If_2">
+                                      <If.Condition>
+                                        <InArgument x:TypeArguments="x:Boolean">
+                                          <mca:CSharpValue x:TypeArguments="x:Boolean">varApproved</mca:CSharpValue>
+                                        </InArgument>
+                                      </If.Condition>
+                                      <If.Then>
+                                        <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Boolean">
+                                              <mca:CSharpReference x:TypeArguments="x:Boolean">order.OrderApproved</mca:CSharpReference>
+                                            </OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Then>
+                                      <If.Else>
+                                        <Assign sap2010:WorkflowViewState.IdRef="Assign_9">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Boolean">
+                                              <mca:CSharpReference x:TypeArguments="x:Boolean">order.OrderApproved</mca:CSharpReference>
+                                            </OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Else>
+                                    </If>
+                                  </PickBranch>
+                                  <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_2">
+                                    <PickBranch.Trigger>
+                                      <Delay sap2010:WorkflowViewState.IdRef="Delay_1">
+                                        <InArgument x:TypeArguments="x:TimeSpan">
+                                          <mca:CSharpValue x:TypeArguments="x:TimeSpan">TimeSpan.FromSeconds(7)</mca:CSharpValue>
+                                        </InArgument>
+                                      </Delay>
+                                    </PickBranch.Trigger>
+                                    <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:Boolean">
+                                          <mca:CSharpReference x:TypeArguments="x:Boolean">order.OrderApproved</mca:CSharpReference>
+                                        </OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                  </PickBranch>
+                                </Pick>
+                              </If.Then>
+                              <If.Else>
+                                <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Boolean">
+                                      <mca:CSharpReference x:TypeArguments="x:Boolean">order.OrderApproved</mca:CSharpReference>
+                                    </OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </FlowStep>
+                        </FlowStep.Next>
+                      </FlowStep>
+                    </FlowStep.Next>
+                  </FlowStep>
+                  <FlowStep x:Key="Alabama" x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+                    <Assign sap2010:Annotation.AnnotationText="Alabama is taxed at 5%." sap2010:WorkflowViewState.IdRef="Assign_4">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Decimal">
+                          <mca:CSharpReference x:TypeArguments="x:Decimal">order.Tax</mca:CSharpReference>
+                        </OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Decimal">
+                          <mca:CSharpValue x:TypeArguments="x:Decimal">order.TotalPrice*.05m</mca:CSharpValue>
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <FlowStep.Next>
+                      <x:Reference>__ReferenceID0</x:Reference>
+                    </FlowStep.Next>
+                  </FlowStep>
+                  <FlowStep x:Key="Georgia" x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                    <Assign sap2010:Annotation.AnnotationText="Georgia is taxed at 3%." sap2010:WorkflowViewState.IdRef="Assign_2">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Decimal">
+                          <mca:CSharpReference x:TypeArguments="x:Decimal">order.Tax</mca:CSharpReference>
+                        </OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Decimal">
+                          <mca:CSharpValue x:TypeArguments="x:Decimal">order.TotalPrice*.03m</mca:CSharpValue>
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <FlowStep.Next>
+                      <x:Reference>__ReferenceID0</x:Reference>
+                    </FlowStep.Next>
+                  </FlowStep>
+                </FlowSwitch>
+              </Flowchart.StartNode>
+              <x:Reference>__ReferenceID1</x:Reference>
+              <x:Reference>__ReferenceID2</x:Reference>
+              <x:Reference>__ReferenceID3</x:Reference>
+              <x:Reference>__ReferenceID4</x:Reference>
+              <x:Reference>__ReferenceID0</x:Reference>
+              <x:Reference>__ReferenceID5</x:Reference>
+            </Flowchart>
+          </Sequence>
+        </ActivityAction>
+      </ForEach>
+    </ActivityAction>
+    <sads:DebugSymbol.Symbol>d1RDOlxVc2Vyc1xMSUs0MVxkb2N1bWVudHNcdmlzdWFsIHN0dWRpbyAyMDE1XFByb2plY3RzXE15SGVsbG9Xb3JsZFxXRlByb2plY3RcVGF4LnhhbWwxEwcTVwECNwOTAg0CAQE6CTpsAgF0QQeQAhECAQJEDURuAgFxSwuOAhYCAQNMDWMXAgFhZA2NAhkCAQRPE094AgFtVhFhGgIBYmgVaGYCAV31ARWAAh4CAVR5GYQBIgIBS4cBHd0BIgIBF+QBFe8BHgIBDmsVdh4CAQVeF157AgFoWRdZbgIBY/0BG/0BbwIBWfgBG/gBawIBVYEBH4EBeAIBUHwffHYCAUyKASOKAXwCARiOASHPASgCASLSASHbASoCARzsARvsAW8CARPnARvnAWsCAQ9zG3NvAgEKbhtuawIBBo8BI7sBMAIBL7wBI84BMAIBI9kBTdkBUQIBIdUBJ9UBgQECAR2RAVWRAVwCATCUASeaAT8CAUWcASW6ASoCATG+ASfCAS8CASrEASXNAS4CASSXAS2XAX8CAUafASufAXUCATKjASmsATICAT6vASm4ATICATfAASvAAYIBAgErywFRywFWAgEpxwErxwGFAQIBJaoBVaoBWQIBRKYBL6YBiQECAT+2AVW2AVoCAT2yAS+yAYkBAgE4</sads:DebugSymbol.Symbol>
+  </ForEach>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="243,61" />
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="850,210" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="243,84">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="243,84">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WaitForResponse`1_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="243,61" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="243,61" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="511,210" />
+      <sap2010:ViewStateData Id="PickBranch_1" sap:VirtualizedContainerService.HintSize="541,468" />
+      <sap2010:ViewStateData Id="Delay_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="243,61" />
+      <sap2010:ViewStateData Id="PickBranch_2" sap:VirtualizedContainerService.HintSize="273,468" />
+      <sap2010:ViewStateData Id="Pick_1" sap:VirtualizedContainerService.HintSize="968,514" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="243,61" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="1236,686">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">290,553.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,89</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">268.5,419.5</av:Point>
+            <av:Size x:Key="ShapeSize">243,84</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">390,503.5 390,553.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">8.5,179.5</av:Point>
+            <av:Size x:Key="ShapeSize">243,84</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">130,263.5 130,461.5 268.5,461.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="243,84">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_3">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">578.5,158</av:Point>
+            <av:Size x:Key="ShapeSize">243,84</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">700,242 700,461.5 511.5,461.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="243,84">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">278.5,268</av:Point>
+            <av:Size x:Key="ShapeSize">243,84</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">400,352 400,382 390,382 390,419.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowSwitch`1_1" sap:VirtualizedContainerService.HintSize="159,125">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">295,96.5</av:Point>
+            <av:Size x:Key="ShapeSize">159,125</av:Size>
+            <av:PointCollection x:Key="AlabamaConnector">454,159 484,159 484,200 578.5,200</av:PointCollection>
+            <av:PointCollection x:Key="GeorgiaConnector">374.5,221.5 374.5,251.5 400,251.5 400,268</av:PointCollection>
+            <av:PointCollection x:Key="FloridaConnector">295,190.25 265,190.25 265,149.5 130,149.5 130,179.5</av:PointCollection>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="850,701">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 374.5,77.5 374.5,96.5</av:PointCollection>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            <x:Double x:Key="Width">836</x:Double>
+            <x:Double x:Key="Height">642.5</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="872,1075">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="902,1224" />
+      <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="932,1373" />
+      <sap2010:ViewStateData Id="WFProject.Tax_1" sap:VirtualizedContainerService.HintSize="972,1453" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

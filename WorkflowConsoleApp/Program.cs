@@ -4,6 +4,7 @@ using System.Activities;
 using System.Activities.Statements;
 using System.Collections.Generic;
 using System.Threading;
+using WFProject;
 
 namespace WorkflowConsoleApp
 {
@@ -27,16 +28,22 @@ namespace WorkflowConsoleApp
                 //Activity workflow1 = new Workflow1();
                 //Dictionary<string, object> wfarg = new Dictionary<string, object>() { { "argInSeconds", 5 } };
                 //WorkflowInvoker.Invoke(workflow1,wfarg);
-                StateMachine workflow = new StateMachine();
-                WorkflowApplication wfapp = new WorkflowApplication(workflow);
-                AutoResetEvent autoEvent = new AutoResetEvent(false);
-                wfapp.Completed = (WorkflowApplicationCompletedEventArgs e) => 
-                {
-                    Console.WriteLine("Workflow has completed!");
-                    autoEvent.Set();
-                };
-                wfapp.Run();
-                wfapp.ResumeBookmark("BookMarkResponse", Convert.ToInt32(Console.ReadLine()));
+
+                //StateMachine workflow = new StateMachine();
+                //WorkflowApplication wfapp = new WorkflowApplication(workflow);
+                //AutoResetEvent autoEvent = new AutoResetEvent(false);
+                //wfapp.Completed = (WorkflowApplicationCompletedEventArgs e) => 
+                //{
+                //    Console.WriteLine("Workflow has completed!");
+                //    autoEvent.Set();
+                //};
+                //wfapp.Run();
+                //wfapp.ResumeBookmark("BookMarkResponse", Convert.ToInt32(Console.ReadLine()));
+
+                OrderingActivity orderingActivity = new OrderingActivity();
+                WorkflowInvoker.Invoke(orderingActivity);
+
+
                 Console.ReadKey();
             }
             catch(ApplicationException aex)

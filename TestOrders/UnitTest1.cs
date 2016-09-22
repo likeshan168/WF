@@ -44,7 +44,8 @@ namespace TestOrders
                     var order = new Order
                     {
                         DateOrdered = DateTime.Now,
-                        LineItems = new Collection<OrderLineItem>()
+                        LineItems = new Collection<OrderLineItem>(),
+                        ShippingState = "Florida"
                     };
 
                     order.LineItems.Add(new OrderLineItem()
@@ -73,7 +74,7 @@ namespace TestOrders
                     ordering.Entry(customer).State = EntityState.Added;
                     int result = ordering.SaveChanges();
                     Console.WriteLine(result);
-                   
+
                 }
             }
             catch (Exception ex)

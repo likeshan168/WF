@@ -1,8 +1,9 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WFProject.OrderingActivity" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="WFProject.OrderingActivity_1"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WFProject.OrderingActivity"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
  xmlns:d="clr-namespace:DataModel;assembly=DataModel"
  xmlns:local="clr-namespace:WFProject.Activities"
+ xmlns:local1="clr-namespace:WFProject"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
@@ -11,6 +12,11 @@
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="argOutCustomers" Type="OutArgument(d:Customers)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>WFProject.OrderingActivity_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System</x:String>
@@ -23,9 +29,12 @@
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>EntityFramework</AssemblyReference>
+      <AssemblyReference>EntityFramework.SqlServer</AssemblyReference>
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.DataAnnotations</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
@@ -35,38 +44,36 @@
       <AssemblyReference>System.Xml</AssemblyReference>
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>DataModel</AssemblyReference>
-      <AssemblyReference>EntityFramework</AssemblyReference>
-      <AssemblyReference>EntityFramework.SqlServer</AssemblyReference>
-      <AssemblyReference>System.ComponentModel.DataAnnotations</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>WFProject</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1" ValidateUnconnectedNodes="True">
-    <Flowchart.Variables>
-      <Variable x:TypeArguments="d:Customers" Name="varCustomers">
-        <Variable.Default>
-          <mca:CSharpValue x:TypeArguments="d:Customers">new Customers()</mca:CSharpValue>
-        </Variable.Default>
-      </Variable>
-    </Flowchart.Variables>
     <Flowchart.StartNode>
       <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
         <local:GetCustomerOrders sap2010:WorkflowViewState.IdRef="GetCustomerOrders_1">
           <local:GetCustomerOrders.outCustomers>
             <OutArgument x:TypeArguments="d:Customers">
-              <mca:CSharpReference x:TypeArguments="d:Customers">varCustomers</mca:CSharpReference>
+              <mca:CSharpReference x:TypeArguments="d:Customers">argOutCustomers</mca:CSharpReference>
             </OutArgument>
           </local:GetCustomerOrders.outCustomers>
         </local:GetCustomerOrders>
         <FlowStep.Next>
-          <FlowDecision x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowDecision_1" />
+          <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+            <local1:Tax sap2010:WorkflowViewState.IdRef="Tax_1">
+              <local1:Tax.argInCalcCustomers>
+                <InArgument x:TypeArguments="d:Customers">
+                  <mca:CSharpValue x:TypeArguments="d:Customers">argOutCustomers</mca:CSharpValue>
+                </InArgument>
+              </local1:Tax.argInCalcCustomers>
+            </local1:Tax>
+          </FlowStep>
         </FlowStep.Next>
       </FlowStep>
     </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID1</x:Reference>
-    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xMSUs0MVxkb2N1bWVudHNcdmlzdWFsIHN0dWRpbyAyMDE1XFByb2plY3RzXE15SGVsbG9Xb3JsZFxXRlByb2plY3RcT3JkZXJpbmdBY3Rpdml0eS54YW1sBC0DRg8CAQExCzFbAgECNwk9IwIBBDoPOmQCAQU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xMSUs0MVxkb2N1bWVudHNcdmlzdWFsIHN0dWRpbyAyMDE1XFByb2plY3RzXE15SGVsbG9Xb3JsZFxXRlByb2plY3RcT3JkZXJpbmdBY3Rpdml0eS54YW1sBTMDTQ8CAQE2CTwjAgEFPw1FGgIBAjkPOWcCAQZCE0JjAgED</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -77,35 +84,42 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_1" sap:VirtualizedContainerService.HintSize="70,87">
+      <sap2010:ViewStateData Id="Tax_1" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">245,181</av:Point>
-            <av:Size x:Key="ShapeSize">70,87</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">260,191</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="FlowStep_1">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">180,109</av:Point>
+            <av:Point x:Key="ShapeLocation">160,119</av:Point>
             <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">280,131 280,181</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">260,141 260,171 360,171 360,191</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="614,636">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="650,636">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 280,107.5 280,109</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 260,107.5 260,119</av:PointCollection>
+            <x:Double x:Key="Width">636.5</x:Double>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WFProject.OrderingActivity_1" sap:VirtualizedContainerService.HintSize="654,716" />
+      <sap2010:ViewStateData Id="WFProject.OrderingActivity_1" sap:VirtualizedContainerService.HintSize="690,716" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
