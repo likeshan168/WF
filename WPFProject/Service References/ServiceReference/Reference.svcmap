@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1c93fb82-4977-4715-9dba-793e657c223a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:26178/Service1.xamlx" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Service1.disco" MetadataType="Disco" ID="b38ab033-53f2-4f40-a3a3-3555bf584338" SourceId="1" SourceUrl="http://localhost:26178/Service1.xamlx?disco" />
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="2f764169-eb5c-4082-9002-55bfa5282a77" SourceId="1" SourceUrl="http://localhost:26178/Service1.xamlx?wsdl" />
+    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="30a9a862-eb5e-4a6f-a6dc-79dd0e5ae7ca" SourceId="1" SourceUrl="http://localhost:26178/Service1.xamlx?xsd=xsd2" />
+    <MetadataFile FileName="Service11.xsd" MetadataType="Schema" ID="aa2652c9-e85c-4872-ba94-f8cca14ddf4c" SourceId="1" SourceUrl="http://localhost:26178/Service1.xamlx?xsd=xsd0" />
+    <MetadataFile FileName="Service12.xsd" MetadataType="Schema" ID="c90a8ce1-6597-4e6d-8928-24d18c2d868a" SourceId="1" SourceUrl="http://localhost:26178/Service1.xamlx?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

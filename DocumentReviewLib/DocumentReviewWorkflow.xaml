@@ -1,0 +1,188 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="DocumentReviewLib.DocumentReviewWorkflow" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="DocumentReviewLib.DocumentReviewWorkflow_1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:e="clr-namespace:Extensions;assembly=Extensions"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:p="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:ssx="clr-namespace:System.ServiceModel.XamlIntegration;assembly=System.ServiceModel"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>System.ServiceModel.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>Extensions</AssemblyReference>
+      <AssemblyReference>System.Activities.DurableInstancing</AssemblyReference>
+      <AssemblyReference>System.Runtime.DurableInstancing</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>DocumentReviewLib</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="文档审批流程" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="p:CorrelationHandle" x:Name="__ReferenceID0" Name="__handle1" />
+      <Variable x:TypeArguments="p:CorrelationHandle" Name="_handle" />
+    </Sequence.Variables>
+    <Pick DisplayName="文档创建" sap2010:WorkflowViewState.IdRef="Pick_1">
+      <PickBranch DisplayName="用户提交了新的流程" sap2010:WorkflowViewState.IdRef="PickBranch_1">
+        <PickBranch.Variables>
+          <Variable x:TypeArguments="x:Int32" Name="ticketID" />
+        </PickBranch.Variables>
+        <PickBranch.Trigger>
+          <p:Receive x:Name="__ReferenceID1" CanCreateInstance="True" DisplayName="收到用户的消息" sap2010:WorkflowViewState.IdRef="Receive_1" OperationName="CreateTicket" ServiceContractName="ITicket">
+            <p:Receive.CorrelationInitializers>
+              <p:RequestReplyCorrelationInitializer>
+                <p:RequestReplyCorrelationInitializer.CorrelationHandle>
+                  <InArgument x:TypeArguments="p:CorrelationHandle">
+                    <VariableValue x:TypeArguments="p:CorrelationHandle" Variable="{x:Reference __ReferenceID0}" />
+                  </InArgument>
+                </p:RequestReplyCorrelationInitializer.CorrelationHandle>
+              </p:RequestReplyCorrelationInitializer>
+            </p:Receive.CorrelationInitializers>
+          </p:Receive>
+        </PickBranch.Trigger>
+        <Sequence DisplayName="事件响应" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Assign DisplayName="随机产生一个流程编号" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">
+                <mca:CSharpReference x:TypeArguments="x:Int32">ticketID</mca:CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">
+                <mca:CSharpValue x:TypeArguments="x:Int32">new Random().Next()</mca:CSharpValue>
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+          <e:SetTicket>
+            <e:SetTicket.TicketID>
+              <InArgument x:TypeArguments="x:Int32">
+                <mca:CSharpValue x:TypeArguments="x:Int32">ticketID</mca:CSharpValue>
+              </InArgument>
+            </e:SetTicket.TicketID>
+            <sap2010:WorkflowViewState.IdRef>SetTicket_1</sap2010:WorkflowViewState.IdRef>
+          </e:SetTicket>
+          <p:InitializeCorrelation sap2010:WorkflowViewState.IdRef="InitializeCorrelation_1">
+            <p:InitializeCorrelation.Correlation>
+              <InArgument x:TypeArguments="p:CorrelationHandle">
+                <mca:CSharpValue x:TypeArguments="p:CorrelationHandle">_handle</mca:CSharpValue>
+              </InArgument>
+            </p:InitializeCorrelation.Correlation>
+            <InArgument x:TypeArguments="x:String" x:Key="id">
+              <mca:CSharpValue x:TypeArguments="x:String">ticketID.ToString()</mca:CSharpValue>
+            </InArgument>
+          </p:InitializeCorrelation>
+          <p:SendReply Request="{x:Reference __ReferenceID1}" DisplayName="SendReplyTo收到用户的消息" sap2010:WorkflowViewState.IdRef="SendReply_1">
+            <p:SendMessageContent DeclaredMessageType="x:Int32">
+              <InArgument x:TypeArguments="x:Int32">
+                <mca:CSharpValue x:TypeArguments="x:Int32">ticketID</mca:CSharpValue>
+              </InArgument>
+            </p:SendMessageContent>
+          </p:SendReply>
+          <WriteLine DisplayName="输出信息" sap2010:WorkflowViewState.IdRef="WriteLine_1">
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">string.Format("流程被创建，编号为：{0}",ticketID.ToString())</mca:CSharpValue>
+            </InArgument>
+          </WriteLine>
+        </Sequence>
+      </PickBranch>
+    </Pick>
+    <Pick DisplayName="文档审批" sap2010:WorkflowViewState.IdRef="Pick_2">
+      <PickBranch DisplayName="经理审批" sap2010:WorkflowViewState.IdRef="PickBranch_2">
+        <PickBranch.Variables>
+          <Variable x:TypeArguments="x:String" Name="action" />
+          <Variable x:TypeArguments="x:String" Name="comment" />
+          <Variable x:TypeArguments="x:Int32" Name="reviewID" />
+        </PickBranch.Variables>
+        <PickBranch.Trigger>
+          <p:Receive sap2010:WorkflowViewState.IdRef="Receive_2" OperationName="UpdateTicket" ServiceContractName="ITicket">
+            <p:Receive.CorrelatesOn>
+              <p:XPathMessageQuery x:Key="id">
+                <p:XPathMessageQuery.Namespaces>
+                  <ssx:XPathMessageContextMarkup>
+                    <x:String x:Key="xgSc">http://tempuri.org/</x:String>
+                  </ssx:XPathMessageContextMarkup>
+                </p:XPathMessageQuery.Namespaces>sm:body()/xgSc:UpdateTicket/xgSc:reviewID</p:XPathMessageQuery>
+            </p:Receive.CorrelatesOn>
+            <p:Receive.CorrelatesWith>
+              <InArgument x:TypeArguments="p:CorrelationHandle">
+                <mca:CSharpValue x:TypeArguments="p:CorrelationHandle">_handle</mca:CSharpValue>
+              </InArgument>
+            </p:Receive.CorrelatesWith>
+            <p:ReceiveParametersContent>
+              <OutArgument x:TypeArguments="x:String" x:Key="action">
+                <mca:CSharpReference x:TypeArguments="x:String">action</mca:CSharpReference>
+              </OutArgument>
+              <OutArgument x:TypeArguments="x:String" x:Key="comment">
+                <mca:CSharpReference x:TypeArguments="x:String">comment</mca:CSharpReference>
+              </OutArgument>
+              <OutArgument x:TypeArguments="x:Int32" x:Key="reviewID">
+                <mca:CSharpReference x:TypeArguments="x:Int32">reviewID</mca:CSharpReference>
+              </OutArgument>
+            </p:ReceiveParametersContent>
+          </p:Receive>
+        </PickBranch.Trigger>
+        <WriteLine DisplayName="打印消息" sap2010:WorkflowViewState.IdRef="WriteLine_2">
+          <InArgument x:TypeArguments="x:String">
+            <mca:CSharpValue x:TypeArguments="x:String">string.Format("Ticket update, action:{0}, comment:{1}, TicketID:{2}",action,comment,reviewID)</mca:CSharpValue>
+          </InArgument>
+        </WriteLine>
+      </PickBranch>
+    </Pick>
+    <sads:DebugSymbol.Symbol>d29DOlxVc2Vyc1xMSUs0MVxkb2N1bWVudHNcdmlzdWFsIHN0dWRpbyAyMDE1XFByb2plY3RzXE15SGVsbG9Xb3JsZFxEb2N1bWVudFJldmlld0xpYlxEb2N1bWVudFJldmlld1dvcmtmbG93LnhhbWwbLAOcAQ4CAQExBXAMAgEkcQWaAQwCAQIyB28UAgElcgeZARQCAQM3C0EXAgFKQwluFAIBJnkLkgEXAgELlAEJmAEVAgEEPBU8dAIBS0QLTxQCAUFQC1cZAgE8WAthJQIBM2ILaBkCASxpC20XAgEnhAERhAFhAgEeiQERiQFdAgEYjwERjwFeAgESjAERjAFeAgEMlgENlgGoAQIBBUwRTGECAUZHEUdeAgFCUxFTVgIBPVsRW2ECAThfD19gAgE0ZRFlVgIBLWsPa38CASg=</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Receive_1" sap:VirtualizedContainerService.HintSize="257,86" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="255,61" />
+      <sap2010:ViewStateData Id="SetTicket_1" sap:VirtualizedContainerService.HintSize="255,22" />
+      <sap2010:ViewStateData Id="InitializeCorrelation_1" sap:VirtualizedContainerService.HintSize="255,96" />
+      <sap2010:ViewStateData Id="SendReply_1" sap:VirtualizedContainerService.HintSize="255,86" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="255,61" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="277,610">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PickBranch_1" sap:VirtualizedContainerService.HintSize="307,894" />
+      <sap2010:ViewStateData Id="Pick_1" sap:VirtualizedContainerService.HintSize="421,940" />
+      <sap2010:ViewStateData Id="Receive_2" sap:VirtualizedContainerService.HintSize="257,86" />
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,61" />
+      <sap2010:ViewStateData Id="PickBranch_2" sap:VirtualizedContainerService.HintSize="287,345" />
+      <sap2010:ViewStateData Id="Pick_2" sap:VirtualizedContainerService.HintSize="421,391" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="443,1495">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="DocumentReviewLib.DocumentReviewWorkflow_1" sap:VirtualizedContainerService.HintSize="483,1575" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

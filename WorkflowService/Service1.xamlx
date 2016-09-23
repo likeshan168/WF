@@ -1,0 +1,194 @@
+﻿<WorkflowService mc:Ignorable="sap sap2010 sads" p:TextExpression.Namespaces="{x:Reference __ReferenceID6}" p:TextExpression.References="{x:Reference __ReferenceID7}" ConfigurationName="Service1" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="WorkflowService_1" Name="Service1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:n="clr-namespace:NorthwindDataModel;assembly=NorthwindDataModel"
+ xmlns:p="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:w="clr-namespace:WorkflowService;assembly=WorkflowService"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <p:Pick sap2010:WorkflowViewState.IdRef="Pick_1">
+    <p:TextExpression.Namespaces>
+      <sco:Collection x:TypeArguments="x:String" x:Name="__ReferenceID6">
+        <x:String>System</x:String>
+        <x:String>System.Collections.Generic</x:String>
+        <x:String>System.Data</x:String>
+        <x:String>System.Linq</x:String>
+        <x:String>System.Text</x:String>
+        <x:String>System.ServiceModel.Activities</x:String>
+      </sco:Collection>
+    </p:TextExpression.Namespaces>
+    <p:TextExpression.References>
+      <sco:Collection x:TypeArguments="p:AssemblyReference" x:Name="__ReferenceID7">
+        <p:AssemblyReference>Microsoft.CSharp</p:AssemblyReference>
+        <p:AssemblyReference>System.Web.DynamicData</p:AssemblyReference>
+        <p:AssemblyReference>System.Drawing</p:AssemblyReference>
+        <p:AssemblyReference>System.Web.Entity</p:AssemblyReference>
+        <p:AssemblyReference>System.Web.ApplicationServices</p:AssemblyReference>
+        <p:AssemblyReference>System</p:AssemblyReference>
+        <p:AssemblyReference>System.Activities</p:AssemblyReference>
+        <p:AssemblyReference>System.Core</p:AssemblyReference>
+        <p:AssemblyReference>System.Data</p:AssemblyReference>
+        <p:AssemblyReference>System.Data.Entity</p:AssemblyReference>
+        <p:AssemblyReference>System.Runtime.Serialization</p:AssemblyReference>
+        <p:AssemblyReference>System.ServiceModel</p:AssemblyReference>
+        <p:AssemblyReference>System.ServiceModel.Activities</p:AssemblyReference>
+        <p:AssemblyReference>System.ServiceModel.Channels</p:AssemblyReference>
+        <p:AssemblyReference>System.Web</p:AssemblyReference>
+        <p:AssemblyReference>System.Xaml</p:AssemblyReference>
+        <p:AssemblyReference>System.Xml</p:AssemblyReference>
+        <p:AssemblyReference>System.Xml.Linq</p:AssemblyReference>
+        <p:AssemblyReference>NorthwindDataModel</p:AssemblyReference>
+        <p:AssemblyReference>System.Data.Linq</p:AssemblyReference>
+        <p:AssemblyReference>mscorlib</p:AssemblyReference>
+        <p:AssemblyReference>WorkflowService</p:AssemblyReference>
+      </sco:Collection>
+    </p:TextExpression.References>
+    <p:PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_1">
+      <p:PickBranch.Variables>
+        <x:Reference>__ReferenceID0</x:Reference>
+        <p:Variable x:TypeArguments="scg:List(n:Customer)" Name="OrdersResult" />
+      </p:PickBranch.Variables>
+      <p:PickBranch.Trigger>
+        <x:Reference>__ReferenceID1</x:Reference>
+      </p:PickBranch.Trigger>
+      <p:Sequence sap2010:WorkflowViewState.IdRef="Sequence_5">
+        <w:GetCustomersActivity sap2010:WorkflowViewState.IdRef="GetCustomersActivity_4">
+          <w:GetCustomersActivity.Customers>
+            <p:OutArgument x:TypeArguments="scg:List(n:Customer)">
+              <mca:CSharpReference x:TypeArguments="scg:List(n:Customer)">OrdersResult</mca:CSharpReference>
+            </p:OutArgument>
+          </w:GetCustomersActivity.Customers>
+        </w:GetCustomersActivity>
+        <SendReply DisplayName="SendReplyToReceive" sap2010:WorkflowViewState.IdRef="SendReply_4">
+          <SendReply.Request>
+            <Receive x:Name="__ReferenceID1" CanCreateInstance="True" sap2010:WorkflowViewState.IdRef="Receive_4" OperationName="GetCustomers">
+              <Receive.CorrelationInitializers>
+                <RequestReplyCorrelationInitializer>
+                  <RequestReplyCorrelationInitializer.CorrelationHandle>
+                    <p:InArgument x:TypeArguments="CorrelationHandle">
+                      <p:VariableValue x:TypeArguments="CorrelationHandle">
+                        <p:VariableValue.Variable>
+                          <p:Variable x:TypeArguments="CorrelationHandle" x:Name="__ReferenceID0" Name="__handle1" />
+                        </p:VariableValue.Variable>
+                      </p:VariableValue>
+                    </p:InArgument>
+                  </RequestReplyCorrelationInitializer.CorrelationHandle>
+                </RequestReplyCorrelationInitializer>
+              </Receive.CorrelationInitializers>
+            </Receive>
+          </SendReply.Request>
+          <SendMessageContent DeclaredMessageType="scg:List(n:Customer)">
+            <p:InArgument x:TypeArguments="scg:List(n:Customer)">
+              <mca:CSharpValue x:TypeArguments="scg:List(n:Customer)">OrdersResult</mca:CSharpValue>
+            </p:InArgument>
+          </SendMessageContent>
+        </SendReply>
+      </p:Sequence>
+    </p:PickBranch>
+    <p:PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_2">
+      <p:PickBranch.Variables>
+        <x:Reference>__ReferenceID2</x:Reference>
+      </p:PickBranch.Variables>
+      <p:PickBranch.Trigger>
+        <x:Reference>__ReferenceID3</x:Reference>
+      </p:PickBranch.Trigger>
+      <p:Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <w:GetOrdersActivity Orders="{x:Null}" customerID="{x:Null}" sap2010:WorkflowViewState.IdRef="GetOrdersActivity_3" />
+        <SendReply DisplayName="SendReplyToReceive" sap2010:WorkflowViewState.IdRef="SendReply_2">
+          <SendReply.Request>
+            <Receive x:Name="__ReferenceID3" CanCreateInstance="True" sap2010:WorkflowViewState.IdRef="Receive_2" OperationName="GetOrders">
+              <Receive.CorrelationInitializers>
+                <RequestReplyCorrelationInitializer>
+                  <RequestReplyCorrelationInitializer.CorrelationHandle>
+                    <p:InArgument x:TypeArguments="CorrelationHandle">
+                      <p:VariableValue x:TypeArguments="CorrelationHandle">
+                        <p:VariableValue.Variable>
+                          <p:Variable x:TypeArguments="CorrelationHandle" x:Name="__ReferenceID2" Name="__handle1" />
+                        </p:VariableValue.Variable>
+                      </p:VariableValue>
+                    </p:InArgument>
+                  </RequestReplyCorrelationInitializer.CorrelationHandle>
+                </RequestReplyCorrelationInitializer>
+              </Receive.CorrelationInitializers>
+            </Receive>
+          </SendReply.Request>
+        </SendReply>
+      </p:Sequence>
+    </p:PickBranch>
+    <p:PickBranch sap2010:WorkflowViewState.IdRef="PickBranch_3">
+      <p:PickBranch.Variables>
+        <x:Reference>__ReferenceID4</x:Reference>
+      </p:PickBranch.Variables>
+      <p:PickBranch.Trigger>
+        <x:Reference>__ReferenceID5</x:Reference>
+      </p:PickBranch.Trigger>
+      <p:Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
+        <w:GetOrderDetailsActivity OrderDetails="{x:Null}" orderID="{x:Null}" sap2010:WorkflowViewState.IdRef="GetOrderDetailsActivity_3" />
+        <SendReply DisplayName="SendReplyToReceive" sap2010:WorkflowViewState.IdRef="SendReply_3">
+          <SendReply.Request>
+            <Receive x:Name="__ReferenceID5" CanCreateInstance="True" sap2010:WorkflowViewState.IdRef="Receive_3" OperationName="GetOrderDetails">
+              <Receive.CorrelationInitializers>
+                <RequestReplyCorrelationInitializer>
+                  <RequestReplyCorrelationInitializer.CorrelationHandle>
+                    <p:InArgument x:TypeArguments="CorrelationHandle">
+                      <p:VariableValue x:TypeArguments="CorrelationHandle">
+                        <p:VariableValue.Variable>
+                          <p:Variable x:TypeArguments="CorrelationHandle" x:Name="__ReferenceID4" Name="__handle1" />
+                        </p:VariableValue.Variable>
+                      </p:VariableValue>
+                    </p:InArgument>
+                  </RequestReplyCorrelationInitializer.CorrelationHandle>
+                </RequestReplyCorrelationInitializer>
+              </Receive.CorrelationInitializers>
+            </Receive>
+          </SendReply.Request>
+        </SendReply>
+      </p:Sequence>
+    </p:PickBranch>
+    <sads:DebugSymbol.Symbol>d2BDOlxVc2Vyc1xMSUs0MVxkb2N1bWVudHNcdmlzdWFsIHN0dWRpbyAyMDE1XFByb2plY3RzXE15SGVsbG9Xb3JsZFxXb3JrZmxvd1NlcnZpY2VcU2VydmljZTEueGFtbHgVDgOaAQwBATMFXBQBEl0FehQBCnsFmAEUAQJFDVMXAR47B1sUARNoDXYXARBkB3kUAQuGAQ2UARcBCIIBB5cBFAEDShdOKQEfPAlCIgEaQwlaFQEUbRdxKQERZQllfgEPZgl4FQEMiwEXjwEpAQmDAQmDAY0BAQeEAQmWARUBBD8PP20BG1cPV2UBFQ==</sads:DebugSymbol.Symbol>
+  </p:Pick>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="GetCustomersActivity_4" sap:VirtualizedContainerService.HintSize="255,22" />
+      <sap2010:ViewStateData Id="Receive_4" sap:VirtualizedContainerService.HintSize="257,86" />
+      <sap2010:ViewStateData Id="SendReply_4" sap:VirtualizedContainerService.HintSize="255,86" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="277,272">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PickBranch_1" sap:VirtualizedContainerService.HintSize="307,556" />
+      <sap2010:ViewStateData Id="GetOrdersActivity_3" sap:VirtualizedContainerService.HintSize="255,22" />
+      <sap2010:ViewStateData Id="Receive_2" sap:VirtualizedContainerService.HintSize="257,86" />
+      <sap2010:ViewStateData Id="SendReply_2" sap:VirtualizedContainerService.HintSize="255,86" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="277,272">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PickBranch_2" sap:VirtualizedContainerService.HintSize="307,556" />
+      <sap2010:ViewStateData Id="GetOrderDetailsActivity_3" sap:VirtualizedContainerService.HintSize="255,22" />
+      <sap2010:ViewStateData Id="Receive_3" sap:VirtualizedContainerService.HintSize="257,86" />
+      <sap2010:ViewStateData Id="SendReply_3" sap:VirtualizedContainerService.HintSize="255,86" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="277,272">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PickBranch_3" sap:VirtualizedContainerService.HintSize="307,556" />
+      <sap2010:ViewStateData Id="Pick_1" sap:VirtualizedContainerService.HintSize="1115,602" />
+      <sap2010:ViewStateData Id="WorkflowService_1" sap:VirtualizedContainerService.HintSize="1145,672" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</WorkflowService>

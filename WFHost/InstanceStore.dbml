@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="test" Class="InstanceStoreDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=test;Persist Security Info=True;User ID=sa" SettingsObjectName="WFHost.Properties.Settings" SettingsPropertyName="testConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DocumentReviewTask" Member="DocumentReviewTasks">
+    <Type Name="DocumentReviewTask">
+      <Column Name="SurrogateInstanceId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PromotionName" Type="System.String" DbType="NVarChar(400) NOT NULL" CanBeNull="false" />
+      <Column Name="TicketId" Type="System.Object" DbType="Variant" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+</Database>

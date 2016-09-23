@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service1" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:26178/Service1.xamlx?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/NorthwindDataModel" />
+      <xsd:import schemaLocation="http://localhost:26178/Service1.xamlx?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:26178/Service1.xamlx?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.Data.Linq" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="Service1_GetCustomers_InputMessage" />
+  <wsdl:message name="Service1_GetCustomers_OutputMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/NorthwindDataModel" name="ArrayOfCustomer" element="q1:ArrayOfCustomer" />
+  </wsdl:message>
+  <wsdl:message name="Service1_GetOrders_InputMessage" />
+  <wsdl:message name="Service1_GetOrders_OutputMessage" />
+  <wsdl:message name="Service1_GetOrderDetails_InputMessage" />
+  <wsdl:message name="Service1_GetOrderDetails_OutputMessage" />
+  <wsdl:portType name="Service1">
+    <wsdl:operation name="GetCustomers">
+      <wsdl:input wsaw:Action="http://tempuri.org/Service1/GetCustomers" message="tns:Service1_GetCustomers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Service1/GetCustomersResponse" message="tns:Service1_GetCustomers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/Service1/GetOrders" message="tns:Service1_GetOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Service1/GetOrdersResponse" message="tns:Service1_GetOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/Service1/GetOrderDetails" message="tns:Service1_GetOrderDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Service1/GetOrderDetailsResponse" message="tns:Service1_GetOrderDetails_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_Service1" type="tns:Service1">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCustomers">
+      <soap:operation soapAction="http://tempuri.org/Service1/GetCustomers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap:operation soapAction="http://tempuri.org/Service1/GetOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <soap:operation soapAction="http://tempuri.org/Service1/GetOrderDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="BasicHttpBinding_Service1" binding="tns:BasicHttpBinding_Service1">
+      <soap:address location="http://localhost:26178/Service1.xamlx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
