@@ -1,0 +1,45 @@
+﻿<Window x:Class="BindingDemo.BindingDataTable.Demo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BindingDemo.BindingDataTable"
+        mc:Ignorable="d"
+        Title="Demo" Height="400" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="22"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" MinWidth="250" Name="lstView">
+            <ListView.View>
+                <GridView x:Name="gridView1">
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding Age}"></GridViewColumn>
+                    <GridViewColumn Header="Sex" DisplayMemberBinding="{Binding Sex}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <WrapPanel Grid.Row="1" DataContext="{Binding ElementName=lstView,Path=SelectedItem}">
+            <StackPanel Orientation="Horizontal" Margin="5 2 5 2">
+                <TextBlock Name="txbContactID" Text="Id:"></TextBlock>
+                <TextBox Name="txtContactID" MinWidth="100" Text="{Binding Id}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5 2 5 2">
+                <TextBlock Name="txbFirstName" Text="Name:"></TextBlock>
+                <TextBox Name="txtFirstName" MinWidth="100" Text="{Binding Name}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5 2 5 2">
+                <TextBlock Name="txbLastName" Text="Age:"></TextBlock>
+                <TextBox Name="txtLastName" MinWidth="100" Text="{Binding Age}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5 2 5 2">
+                <TextBlock Name="txbEmailAddress" Text="Sex:"></TextBlock>
+                <TextBox Name="txtEmailAddress" MinWidth="100" Text="{Binding Sex}"></TextBox>
+            </StackPanel>
+        </WrapPanel>
+        <Button Grid.Row="2" HorizontalAlignment="Right" Click="Button_Click" Name="button" Content="Refresh"></Button>
+    </Grid>
+</Window>
