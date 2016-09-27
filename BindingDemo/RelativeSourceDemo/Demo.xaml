@@ -1,0 +1,20 @@
+﻿<Window x:Class="BindingDemo.RelativeSourceDemo.Demo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BindingDemo.RelativeSourceDemo"
+        mc:Ignorable="d"
+        Title="Demo" Height="300" Width="300">
+    <Grid Background="Red" Margin="10" x:Name="gd1">
+        <DockPanel x:Name="dp1" Margin="10" Background="Orange">
+            <Grid Background="Yellow" Margin="10" x:Name="gd2">
+                <DockPanel Background="LawnGreen" Margin="10" x:Name="dp2">
+                    <!--<TextBox Name="textBlock1" Margin="10" FontSize="24" Text="{Binding Path=Name,RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2,AncestorType={x:Type Grid}}}">-->
+                        <TextBox Name="textBlock1" Margin="10" FontSize="24" Text="{Binding Path=Name,RelativeSource={RelativeSource Mode=Self}}">
+                    </TextBox>
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>
