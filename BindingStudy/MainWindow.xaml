@@ -1,0 +1,16 @@
+﻿<Window x:Class="BindingStudy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BindingStudy"
+        xmlns:models="clr-namespace:BindingStudy.Models"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <StackPanel>
+            <TextBox x:Name="txtName" BorderBrush="Black" Margin="5"></TextBox>
+            <Button Content="Add Age" Margin="5" Click="Button_Click"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,77 @@
+﻿<Window x:Class="基础知识.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:基础知识"
+        xmlns:models="clr-namespace:基础知识.Models"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <!--<Window.Resources>
+        <models:Human x:Key="human" Child="ABC">
+            
+        </models:Human>
+    </Window.Resources>-->
+
+    <!--<x:Code>
+        <![CDATA[
+        private void button1_click(object sender,RoutedEventArgs e)
+        {
+            MessageBox.Show("Bye!Code-Behind!");
+        }
+        ]]>
+    </x:Code>-->
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Ellipse HorizontalAlignment="Left" Margin="-54,-9.5,0,0" Width="200" Height="200" VerticalAlignment="Top">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FF94AA8B"/>
+                    <GradientStop Color="#FFB4D3A9" Offset="1"/>
+                    <GradientStop Color="#FF363E36" Offset="0.383"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <!--<Rectangle Name="rectangle" Width="200" Height="200">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="Blue"></SolidColorBrush>
+            </Rectangle.Fill>
+        </Rectangle>-->
+        <!--<Button Width="100" Height="20" Name="button" Content="test" Click="button_Click"></Button>-->
+
+        <!--完整的书写-->
+        <!--<Rectangle x:Name="rectangle" Width="200" Height="200">
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <LinearGradientBrush.StartPoint>
+                        <Point X="0" Y="0"></Point>
+                    </LinearGradientBrush.StartPoint>
+                    <LinearGradientBrush.EndPoint>
+                        <Point X="1" Y="1"></Point>
+                    </LinearGradientBrush.EndPoint>
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStopCollection>
+                            <GradientStop Offset="0.2" Color="LightBlue"></GradientStop>
+                            <GradientStop Offset="0.7" Color="Blue"></GradientStop>
+                            <GradientStop Offset="1.0" Color="DarkBlue"></GradientStop>
+                        </GradientStopCollection>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>-->
+        <!--简写-->
+        <!--<Rectangle x:Name="rectangle" Width="200" Height="200">
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.2" Color="White"></GradientStop>
+                        <GradientStop Offset="0.65" Color="Black"></GradientStop>
+                        <GradientStop Offset="0.8" Color="Gray"></GradientStop>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>-->
+
+        <Button x:Name="button1" Content="test" Width="200" Height="50" Click="button_Click"></Button>
+
+    </Grid>
+</Window>
